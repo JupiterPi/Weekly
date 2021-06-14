@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name" translatable="false">Weekly</string>
+
+    <string name="main_time_left">%s left</string>
+    <string name="main_remove">Remove time</string>
+
+    <string name="dialog_error_message">An error occurred :(</string>
+    <string name="dialog_error_ok">Uh, ok</string>
+    <string name="error_not_implemented">Not yet implemented!</string>
+
+    <string name="chooser_title">How much time do you wan to remove?</string>
+    <string name="chooser_remove_display">Remove %s</string>
+    <string name="chooser_remove_display_empty">Choose time to remove</string>
+    <string name="chooser_btn_remove_5min" translatable="false">- 5 min</string>
+    <string name="chooser_btn_remove_10min" translatable="false">- 10 min</string>
+
+    <string name="menu_history">History</string>
+    <string name="menu_last_week">Last week</string>
+
+    <string name="history_title">History</string>
+    <string name="history_text_empty">No history available. </string>
+</resources>

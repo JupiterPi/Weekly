@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_time_left">%s übrig</string>
+    <string name="dialog_error_message">Ein Fehler ist aufgetreten :(</string>
+    <string name="dialog_error_ok">Äh, ok</string>
+    <string name="chooser_remove_display">%s abziehen</string>
+    <string name="chooser_remove_display_empty">Zeit auswählen</string>
+    <string name="chooser_title">Wie viel Zeit abziehen?</string>
+    <string name="main_remove">Zeit abziehen</string>
+    <string name="menu_history">Verlauf</string>
+    <string name="menu_last_week">Letzte Woche</string>
+    <string name="history_title">Verlauf</string>
+    <string name="history_text_empty">"Kein Verlauf verfügbar. "</string>
+    <string name="error_not_implemented">Noch nicht verfügbar!</string>
+</resources>
