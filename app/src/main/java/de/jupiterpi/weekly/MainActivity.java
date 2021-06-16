@@ -1,4 +1,4 @@
-package de.jupiterpi.kaye.orders.weekly;
+package de.jupiterpi.weekly;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +17,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import de.jupiterpi.kaye.orders.weekly.data.DataService;
-import de.jupiterpi.kaye.orders.weekly.data.HistoryEntry;
-import de.jupiterpi.kaye.orders.weekly.data.legacy_history.LegacyHistoryData;
+import de.jupiterpi.kaye.orders.weekly.R;
+import de.jupiterpi.weekly.data.DataService;
+import de.jupiterpi.weekly.data.HistoryEntry;
+import de.jupiterpi.weekly.data.legacy_history.LegacyHistoryData;
 import jupiterpi.tools.util.TimeUtils;
 
 public class MainActivity extends AppCompatActivity {

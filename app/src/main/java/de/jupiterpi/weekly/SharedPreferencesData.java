@@ -1,4 +1,4 @@
-package de.jupiterpi.kaye.orders.weekly;
+package de.jupiterpi.weekly;
 
 import android.content.Context;
 import android.content.SharedPreferences;

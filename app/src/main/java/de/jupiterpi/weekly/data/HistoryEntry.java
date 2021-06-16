@@ -1,4 +1,4 @@
-package de.jupiterpi.kaye.orders.weekly.data;
+package de.jupiterpi.weekly.data;
 
 import java.util.Date;
 

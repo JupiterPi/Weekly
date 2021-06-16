@@ -1,4 +1,4 @@
-package de.jupiterpi.kaye.orders.weekly;
+package de.jupiterpi.weekly;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import de.jupiterpi.kaye.orders.weekly.data.legacy_history.LegacyHistoryData;
+import de.jupiterpi.kaye.orders.weekly.R;
+import de.jupiterpi.weekly.data.legacy_history.LegacyHistoryData;
 
 public class HistoryActivity extends AppCompatActivity {
     private LegacyHistoryData data;

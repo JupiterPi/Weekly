@@ -1,9 +1,11 @@
-package de.jupiterpi.kaye.orders.weekly;
+package de.jupiterpi.weekly;
 
 import android.content.Context;
 import android.content.DialogInterface;
 
 import androidx.appcompat.app.AlertDialog;
+
+import de.jupiterpi.kaye.orders.weekly.R;
 
 public class ErrorDialog {
     public static void show(Context context) {

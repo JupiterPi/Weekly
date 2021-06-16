@@ -1,4 +1,4 @@
-package de.jupiterpi.kaye.orders.weekly.data.legacy_history;
+package de.jupiterpi.weekly.data.legacy_history;
 
 import android.content.Context;
 

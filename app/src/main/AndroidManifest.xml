@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HistoryActivity" />
+        <activity android:name="de.jupiterpi.weekly.HistoryActivity" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name="de.jupiterpi.weekly.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".data.DataService"
+            android:name="de.jupiterpi.weekly.data.DataService"
             android:enabled="true"
             android:exported="false"></service>
     </application>

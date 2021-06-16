@@ -1,4 +1,4 @@
-package de.jupiterpi.kaye.orders.weekly.data;
+package de.jupiterpi.weekly.data;
 
 import android.app.Service;
 import android.content.Context;
@@ -11,11 +11,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.jupiterpi.kaye.orders.weekly.data.legacy_history.LegacyHistoryEntry;
+import de.jupiterpi.weekly.data.legacy_history.LegacyHistoryEntry;
 import jupiterpi.tools.files.TextFile;
 import jupiterpi.tools.files.csv.CSVObjectsFile;
 
-import static de.jupiterpi.kaye.orders.weekly.data.HistoryEntry.Type;
+import static de.jupiterpi.weekly.data.HistoryEntry.Type;
 
 public class DataService extends Service {
     private IBinder binder = new DataBinder();
