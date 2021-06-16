@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,8 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import de.jupiterpi.kaye.orders.weekly.data.DataService;
-import de.jupiterpi.kaye.orders.weekly.history.HistoryActivity;
-import de.jupiterpi.kaye.orders.weekly.history.HistoryData;
+import de.jupiterpi.kaye.orders.weekly.data.HistoryEntry;
+import de.jupiterpi.kaye.orders.weekly.data.legacy_history.LegacyHistoryData;
 import jupiterpi.tools.util.TimeUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
 
         data = new SharedPreferencesData(this);
         displayTimeLeft(data.readTimeLeft());
+    }
+
+    public void test(View view) {
+        System.out.println("------------------- timeLeft: " + dataService.getTimeLeft());
+        for (HistoryEntry entry : dataService.getEntries()) {
+            System.out.println("------------------- entry: " + entry.toString());
+        }
     }
 
     @Override
@@ -90,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         data.setTimeLeft(timeLeft);
         displayTimeLeft(timeLeft);
 
-        new HistoryData(this).addEntry(seconds);
+        new LegacyHistoryData(this).addEntry(seconds);
     }
 
     /* dialog */

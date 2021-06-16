@@ -1,4 +1,4 @@
-package de.jupiterpi.kaye.orders.weekly.history;
+package de.jupiterpi.kaye.orders.weekly.data.legacy_history;
 
 import android.content.Context;
 
@@ -10,31 +10,31 @@ import jupiterpi.tools.files.TextFile;
 import jupiterpi.tools.files.csv.CSVObjectsFile;
 import jupiterpi.tools.util.ToolsUtil;
 
-public class HistoryData {
+public class LegacyHistoryData {
     private final String HISTORY_FILENAME = "history.csv";
 
-    private CSVObjectsFile<HistoryEntry> file;
+    private CSVObjectsFile<LegacyHistoryEntry> file;
 
-    public HistoryData(Context context) {
+    public LegacyHistoryData(Context context) {
         File path = new File(context.getFilesDir(), HISTORY_FILENAME);
-        file = new CSVObjectsFile<>(new TextFile(path), HistoryEntry.class);
+        file = new CSVObjectsFile<>(new TextFile(path), LegacyHistoryEntry.class);
     }
 
-    public List<HistoryEntry> getEntries() {
+    public List<LegacyHistoryEntry> getEntries() {
         return file.getObjects();
     }
 
     public String getEntriesToString() {
         List<String> entries = new ArrayList<>();
-        for (HistoryEntry entry : getEntries()) {
+        for (LegacyHistoryEntry entry : getEntries()) {
             entries.add(entry.toString());
         }
         return ToolsUtil.appendWithSeparator(entries, "\n");
     }
 
     public void addEntry(int seconds) {
-        HistoryEntry entry = new HistoryEntry(seconds);
-        List<HistoryEntry> entries = getEntries();
+        LegacyHistoryEntry entry = new LegacyHistoryEntry(seconds);
+        List<LegacyHistoryEntry> entries = getEntries();
         entries.add(entry);
         file.writeObjects(entries);
     }

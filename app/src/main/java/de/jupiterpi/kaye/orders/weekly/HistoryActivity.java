@@ -1,19 +1,16 @@
-package de.jupiterpi.kaye.orders.weekly.history;
+package de.jupiterpi.kaye.orders.weekly;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
-import de.jupiterpi.kaye.orders.weekly.R;
+import de.jupiterpi.kaye.orders.weekly.data.legacy_history.LegacyHistoryData;
 
 public class HistoryActivity extends AppCompatActivity {
-    private HistoryData data;
+    private LegacyHistoryData data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +24,7 @@ public class HistoryActivity extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle(R.string.history_title);
 
-        data = new HistoryData(this);
+        data = new LegacyHistoryData(this);
         TextView text = findViewById(R.id.history_text);
         String entriesStr = data.getEntriesToString();
         if (!entriesStr.isEmpty()) text.setText(entriesStr);

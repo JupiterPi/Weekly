@@ -1,15 +1,15 @@
-package de.jupiterpi.kaye.orders.weekly.history;
+package de.jupiterpi.kaye.orders.weekly.data.legacy_history;
 
 import java.util.Date;
 
 import jupiterpi.tools.files.csv.CSVCastable;
 import jupiterpi.tools.util.TimeUtils;
 
-public class HistoryEntry implements CSVCastable {
+public class LegacyHistoryEntry implements CSVCastable {
     private Date time;
     private int seconds;
 
-    public HistoryEntry(int seconds) {
+    public LegacyHistoryEntry(int seconds) {
         this.time = new Date();
         this.seconds = seconds;
     }
@@ -31,7 +31,7 @@ public class HistoryEntry implements CSVCastable {
 
     /* csv */
 
-    public HistoryEntry(String[] f) {
+    public LegacyHistoryEntry(String[] f) {
         time = new Date(Long.parseLong(f[0]));
         seconds = Integer.parseInt(f[1]);
     }

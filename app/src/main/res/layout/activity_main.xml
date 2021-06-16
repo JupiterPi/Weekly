@@ -44,6 +44,13 @@
             android:onClick="showChooseTimeDialog"
             android:text="@string/main_remove" />
 
+        <!--<Button
+            android:id="@+id/btn_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="test"
+            android:text="test" />-->
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
