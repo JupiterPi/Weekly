@@ -4,9 +4,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import de.jupiterpi.kaye.orders.weekly.data.DataService;
 import de.jupiterpi.kaye.orders.weekly.history.HistoryActivity;
 import de.jupiterpi.kaye.orders.weekly.history.HistoryData;
 import jupiterpi.tools.util.TimeUtils;
@@ -21,16 +26,37 @@ import jupiterpi.tools.util.TimeUtils;
 public class MainActivity extends AppCompatActivity {
     private SharedPreferencesData data;
 
+    private ServiceConnection connection = null;
+    private DataService dataService = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        connection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                dataService = ((DataService.DataBinder)iBinder).getService();
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+                dataService = null;
+            }
+        };
+        bindService(new Intent(this, DataService.class), connection, BIND_AUTO_CREATE);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         data = new SharedPreferencesData(this);
         displayTimeLeft(data.readTimeLeft());
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (connection != null) unbindService(connection);
+        super.onDestroy();
     }
 
     @Override
