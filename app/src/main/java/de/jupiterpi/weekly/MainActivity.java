@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 dataService = ((DataService.DataBinder)iBinder).getService();
                 displayTimeLeft(dataService.getTimeLeft());
-                test(findViewById(R.id.btn_test));
             }
             @Override
             public void onServiceDisconnected(ComponentName componentName) {

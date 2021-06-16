@@ -36,6 +36,17 @@ public class HistoryEntry implements CSVCastable {
         return String.format("HistoryEntry{time=%s,type=%s%s", TimeUtils.DF_DISPLAY_FULL.format(time), type.toString(), extra > 0 ? ","+extra : "");
     }
 
+    public String toStringDisplay() {
+        String str = "";
+        str += TimeUtils.DF_DISPLAY_FULL.format(time);
+        str += " - ";
+        String action = type.toString().toLowerCase();
+        action.replaceAll("_", " ");
+        str += action;
+        str += extra > 0 ? " " + TimeUtils.formatDuration(extra) + "\n" : "\n";
+        return str;
+    }
+
     /* csv */
 
     public HistoryEntry(String[] f) {
