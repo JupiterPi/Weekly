@@ -24,16 +24,23 @@ import de.jupiterpi.weekly.data.legacy_history.LegacyHistoryData;
 import jupiterpi.tools.util.TimeUtils;
 
 public class MainActivity extends AppCompatActivity {
-    private SharedPreferencesData data;
-
-    private ServiceConnection connection = null;
-    private DataService dataService = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initializeOptionsMenu();
+        initializeDataService();
+    }
+
+    /* data (service) */
+
+    private SharedPreferencesData data;
+
+    private ServiceConnection connection = null;
+    private DataService dataService = null;
+
+    public void initializeDataService() {
         connection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -46,11 +53,14 @@ public class MainActivity extends AppCompatActivity {
         };
         bindService(new Intent(this, DataService.class), connection, BIND_AUTO_CREATE);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         data = new SharedPreferencesData(this);
         displayTimeLeft(data.readTimeLeft());
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (connection != null) unbindService(connection);
+        super.onDestroy();
     }
 
     public void test(View view) {
@@ -60,10 +70,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        if (connection != null) unbindService(connection);
-        super.onDestroy();
+    /* options menu / toolbar */
+
+    private void initializeOptionsMenu() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -85,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
+    /* ui util */
 
     private void displayTimeLeft(int timeLeft) {
         TextView timeView = findViewById(R.id.main_time_left);
