@@ -30,12 +30,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initializeOptionsMenu();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         initializeDataService();
     }
 
     /* data (service) */
-
-    private SharedPreferencesData data;
 
     private ServiceConnection connection = null;
     private DataService dataService = null;
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 dataService = ((DataService.DataBinder)iBinder).getService();
+                displayTimeLeft(dataService.getTimeLeft());
+                test(findViewById(R.id.btn_test));
             }
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
@@ -52,15 +57,17 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         bindService(new Intent(this, DataService.class), connection, BIND_AUTO_CREATE);
-
-        data = new SharedPreferencesData(this);
-        displayTimeLeft(data.readTimeLeft());
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
+        System.out.println("--------------------------- stopped");
         if (connection != null) unbindService(connection);
-        super.onDestroy();
+        super.onStop();
+    }
+
+    public void destroy(View view) {
+        if (connection != null) unbindService(connection);
     }
 
     public void test(View view) {
@@ -97,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    /* ui util */
+    /* ui */
 
     private void displayTimeLeft(int timeLeft) {
         TextView timeView = findViewById(R.id.main_time_left);
@@ -105,12 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void remove(int seconds) {
-        int timeLeft = data.readTimeLeft();
-        timeLeft -= seconds;
-        data.setTimeLeft(timeLeft);
-        displayTimeLeft(timeLeft);
-
-        new LegacyHistoryData(this).addEntry(seconds);
+        displayTimeLeft(dataService.remove(seconds));
     }
 
     /* dialog */

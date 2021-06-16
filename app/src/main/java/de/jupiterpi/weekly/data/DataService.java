@@ -41,6 +41,7 @@ public class DataService extends Service {
 
     @Override
     public void onDestroy() {
+        System.out.println("--------------------------------------- destroyed");
         write();
         super.onDestroy();
     }
@@ -59,6 +60,8 @@ public class DataService extends Service {
 
         int version = sharedPreferences.getInt(SHARED_PREFERENCES_VERSION_KEY, 0);
 
+        System.out.println("------------------------------------ version: " + version);
+
         if (version == 0) {
             SharedPreferences sp = getSharedPreferences("general_data", Context.MODE_PRIVATE);
             timeLeft = sp.getInt("time_left", 25200);
@@ -72,7 +75,7 @@ public class DataService extends Service {
 
         if (version == 1) {
             timeLeft = sharedPreferences.getInt("time_left", -1);
-            if (timeLeft == -1) {
+            if (timeLeft <= 0) {
                 editor.putInt("time_left", 25200);
                 timeLeft = 25200;
             }
@@ -81,10 +84,14 @@ public class DataService extends Service {
             CSVObjectsFile<HistoryEntry> file = new CSVObjectsFile<>(new TextFile(path), HistoryEntry.class);
             entries.addAll(file.getObjects());
         }
+
+        /*timeLeft = 25200;
+        entries.add(new HistoryEntry(Type.REMOVED, 600));*/
     }
 
     private void write() {
         editor.putInt("time_left", timeLeft);
+        editor.putInt("version", 1);
         editor.apply();
 
         File path = new File(getFilesDir(), "history.csv");
@@ -99,6 +106,12 @@ public class DataService extends Service {
 
     public int getTimeLeft() {
         return timeLeft;
+    }
+
+    public int remove(int seconds) {
+        timeLeft = getTimeLeft() - seconds;
+        entries.add(new HistoryEntry(Type.REMOVED, seconds));
+        return getTimeLeft();
     }
 
     public List<HistoryEntry> getEntries() {
