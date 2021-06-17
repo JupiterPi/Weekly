@@ -66,7 +66,7 @@ public class HistoryActivity extends AppCompatActivity {
                 dataService = ((DataService.DataBinder)iBinder).getService();
                 String text = "";
                 for (HistoryEntry entry : dataService.getEntries()) {
-                    text += entry.toStringDisplay();
+                    text += entry.toStringDisplay(getApplicationContext());
                 }
                 setText(text);
             }

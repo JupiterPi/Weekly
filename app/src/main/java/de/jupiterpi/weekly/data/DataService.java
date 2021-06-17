@@ -9,7 +9,9 @@ import android.os.IBinder;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.jupiterpi.weekly.data.legacy_history.LegacyHistoryEntry;
 import jupiterpi.tools.files.TextFile;
@@ -69,7 +71,9 @@ public class DataService extends Service {
             File path = new File(getFilesDir(), "history.csv");
             CSVObjectsFile<LegacyHistoryEntry> file = new CSVObjectsFile<>(new TextFile(path), LegacyHistoryEntry.class);
             for (LegacyHistoryEntry entry : file.getObjects()) {
-                entries.add(new HistoryEntry(entry.getTime(), Type.REMOVED, entry.getSeconds()));
+                Map<String, String> extra = new HashMap<>();
+                extra.put("amount", Integer.toString(entry.getSeconds()));
+                entries.add(new HistoryEntry(entry.getTime(), Type.REMOVED, extra));
             }
         }
 
@@ -82,16 +86,29 @@ public class DataService extends Service {
 
             File path = new File(getFilesDir(), "history.csv");
             CSVObjectsFile<HistoryEntry> file = new CSVObjectsFile<>(new TextFile(path), HistoryEntry.class);
-            entries.addAll(file.getObjects());
+            for (String[] parts : file.get()) {
+                entries.add(new HistoryEntry(new String[]{
+                        parts[0], parts[1], "amount=" + parts[2]
+                }));
+            }
         }
 
-        /*timeLeft = 25200;
-        entries.add(new HistoryEntry(Type.REMOVED, 600));*/
+        if (version == 2) {
+            timeLeft = sharedPreferences.getInt("time_left", -1);
+            if (timeLeft <= 0) {
+                editor.putInt("time_left", 25200);
+                timeLeft = 25200;
+            }
+
+            File path = new File(getFilesDir(), "history.csv");
+            CSVObjectsFile<HistoryEntry> file = new CSVObjectsFile<>(new TextFile(path), HistoryEntry.class);
+            entries.addAll(file.getObjects());
+        }
     }
 
     private void write() {
         editor.putInt("time_left", timeLeft);
-        editor.putInt("version", 1);
+        editor.putInt("version", 2);
         editor.apply();
 
         File path = new File(getFilesDir(), "history.csv");
@@ -110,7 +127,11 @@ public class DataService extends Service {
 
     public int remove(int seconds) {
         timeLeft = getTimeLeft() - seconds;
-        entries.add(new HistoryEntry(Type.REMOVED, seconds));
+
+        Map<String, String> extra = new HashMap<>();
+        extra.put("amount", Integer.toString(seconds));
+        entries.add(new HistoryEntry(Type.REMOVED, extra));
+
         return getTimeLeft();
     }
 
