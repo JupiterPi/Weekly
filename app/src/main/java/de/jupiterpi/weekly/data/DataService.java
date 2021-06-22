@@ -1,14 +1,18 @@
 package de.jupiterpi.weekly.data;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.TimeUtils;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +43,7 @@ public class DataService extends Service {
     public void onCreate() {
         super.onCreate();
         read();
+        checkNewWeek();
     }
 
     @Override
@@ -121,8 +126,26 @@ public class DataService extends Service {
     private int timeLeft;
     private List<HistoryEntry> entries = new ArrayList<>();
 
+    private void checkNewWeek() {
+        HistoryEntry lastEntry = entries.get(entries.size()-1);
+        int lastDay = Integer.parseInt(new SimpleDateFormat("u").format(lastEntry.time.getTime()));
+        int day = Integer.parseInt(new SimpleDateFormat("u").format(new Date()));
+        if (day < lastDay) {
+            Map<String, String> extra = new HashMap<>();
+            extra.put("last_week_time_left", Integer.toString(timeLeft));
+            extra.put("new_week_time_left", Integer.toString(25200));
+            entries.add(new HistoryEntry(Type.NEW_WEEK, extra));
+
+            timeLeft = 25200;
+        }
+    }
+
     public int getTimeLeft() {
         return timeLeft;
+    }
+
+    public List<HistoryEntry> getEntries() {
+        return entries;
     }
 
     public int remove(int seconds) {
@@ -133,9 +156,5 @@ public class DataService extends Service {
         entries.add(new HistoryEntry(Type.REMOVED, extra));
 
         return getTimeLeft();
-    }
-
-    public List<HistoryEntry> getEntries() {
-        return entries;
     }
 }
