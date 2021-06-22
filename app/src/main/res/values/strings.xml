@@ -24,4 +24,6 @@
     <string name="history_entry_added">added %s</string>
     <string name="history_entry_new_week">new week (left from last week: %s / new time: %s)</string>
     <string name="history_entry_transferred_from_last_week">transferred %s from last week</string>
+
+    <string name="last_week_title">Last Week</string>
 </resources>

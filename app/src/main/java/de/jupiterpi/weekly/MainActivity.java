@@ -85,17 +85,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_history:
-                Intent intent = new Intent(this, HistoryActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.menu_last_week:
-                ErrorDialog.show(this, getText(R.string.error_not_implemented).toString());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_history) {
+            Intent intent = new Intent(this, HistoryActivity.class);
+            startActivity(intent);
+            return true;
         }
+        if (item.getItemId() == R.id.menu_last_week) {
+            Intent intent = new Intent(this, LastWeekActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
