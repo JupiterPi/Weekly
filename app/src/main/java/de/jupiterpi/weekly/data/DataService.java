@@ -1,13 +1,11 @@
 package de.jupiterpi.weekly.data;
 
-import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.TimeUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -42,8 +40,12 @@ public class DataService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        read();
-        checkNewWeek();
+        try {
+            read();
+            checkNewWeek();
+        } catch (TextFile.DoesNotExistException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -61,11 +63,11 @@ public class DataService extends Service {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    private void read() {
+    private void read() throws TextFile.DoesNotExistException {
         sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        int version = sharedPreferences.getInt(SHARED_PREFERENCES_VERSION_KEY, 0);
+        int version = sharedPreferences.getInt(SHARED_PREFERENCES_VERSION_KEY, -1);
 
         System.out.println("------------------------------------ version: " + version);
 
@@ -74,7 +76,7 @@ public class DataService extends Service {
             timeLeft = sp.getInt("time_left", 25200);
 
             File path = new File(getFilesDir(), "history.csv");
-            CSVObjectsFile<LegacyHistoryEntry> file = new CSVObjectsFile<>(new TextFile(path), LegacyHistoryEntry.class);
+            CSVObjectsFile<LegacyHistoryEntry> file = new CSVObjectsFile<>(new TextFile(path, true), LegacyHistoryEntry.class);
             for (LegacyHistoryEntry entry : file.getObjects()) {
                 Map<String, String> extra = new HashMap<>();
                 extra.put("amount", Integer.toString(entry.getSeconds()));
@@ -123,21 +125,18 @@ public class DataService extends Service {
 
     /* data */
 
-    private int timeLeft;
+    private int timeLeft = 0;
     private List<HistoryEntry> entries = new ArrayList<>();
 
     private void checkNewWeek() {
+        if (entries.size() == 0) {
+            newWeek();
+            return;
+        }
         HistoryEntry lastEntry = entries.get(entries.size()-1);
         int lastDay = Integer.parseInt(new SimpleDateFormat("u").format(lastEntry.time.getTime()));
         int day = Integer.parseInt(new SimpleDateFormat("u").format(new Date()));
-        if (day < lastDay) {
-            Map<String, String> extra = new HashMap<>();
-            extra.put("last_week_time_left", Integer.toString(timeLeft));
-            extra.put("new_week_time_left", Integer.toString(25200));
-            entries.add(new HistoryEntry(Type.NEW_WEEK, extra));
-
-            timeLeft = 25200;
-        }
+        if (day < lastDay) newWeek();
     }
 
     public int getTimeLeft() {
@@ -156,5 +155,20 @@ public class DataService extends Service {
         entries.add(new HistoryEntry(Type.REMOVED, extra));
 
         return getTimeLeft();
+    }
+
+    private void newWeek() {
+        int timeLeft = this.timeLeft;
+        int standardNewTime = 25200;
+        int newTime = (int) Math.min(standardNewTime * 1.5f, standardNewTime*1.0f + timeLeft);
+        int transferred = newTime - standardNewTime;
+
+        Map<String, String> extra = new HashMap<>();
+        extra.put("last_week_time_left", Integer.toString(timeLeft));
+        extra.put("transferred_from_last_week", Integer.toString(transferred));
+        extra.put("new_week_time_left", Integer.toString(newTime));
+        entries.add(new HistoryEntry(Type.NEW_WEEK, extra));
+
+        timeLeft = 25200;
     }
 }

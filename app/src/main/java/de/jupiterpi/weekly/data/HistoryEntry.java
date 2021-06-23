@@ -19,7 +19,7 @@ public class HistoryEntry implements CSVCastable {
     public Map<String, String> extra = new HashMap<>();
 
     public enum Type {
-        REMOVED, ADDED, NEW_WEEK, TRANSFERRED_FROM_LAST_WEEK
+        REMOVED, NEW_WEEK
     }
 
     public HistoryEntry(Type type) {
@@ -61,15 +61,14 @@ public class HistoryEntry implements CSVCastable {
         String action = "error";
         switch (type) {
             case REMOVED: action = context.getText(R.string.history_entry_removed).toString(); break;
-            case ADDED: action = context.getText(R.string.history_entry_added).toString(); break;
             case NEW_WEEK: action = context.getText(R.string.history_entry_new_week).toString(); break;
-            case TRANSFERRED_FROM_LAST_WEEK: action = context.getText(R.string.history_entry_transferred_from_last_week).toString(); break;
         }
-        List<String> values = new ArrayList<>();
-        for (String value : extra.values()) {
-            values.add(TimeUtils.formatDuration(Integer.parseInt(value)));
+        for (String key : extra.keySet()) {
+            System.out.println(" ------------------------------------------------------- " + key + " = " + extra.get(key));
+            int time = Integer.parseInt(extra.get(key));
+            action = action.replaceAll("\\{" + key + "\\}", TimeUtils.formatDuration(time));
         }
-        str += String.format(action, values.toArray());
+        str += action;
 
         return str + "\n";
     }

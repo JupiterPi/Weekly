@@ -12,8 +12,6 @@
     <string name="history_title">Verlauf</string>
     <string name="history_text_empty">"Kein Verlauf verfügbar. "</string>
     <string name="error_not_implemented">Noch nicht verfügbar!</string>
-    <string name="history_entry_removed">%s abgezogen</string>
-    <string name="history_entry_added">%s hinzugefügt</string>
-    <string name="history_entry_new_week">neue Woche (%s übrig von letzter Woche / aufgefüllt zu %s)</string>
-    <string name="history_entry_transferred_from_last_week">%s von letzter Woche übertragen</string>
+    <string name="history_entry_removed">{amount} abgezogen</string>
+    <string name="history_entry_new_week">neue Woche ({last_week_time_left} von letzter Woche übrig, {transferred_from_last_week} davon übertragen, also neue Zeit: {new_week_time_left})</string>
 </resources>

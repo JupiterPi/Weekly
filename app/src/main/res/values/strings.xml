@@ -20,8 +20,6 @@
     <string name="history_title">History</string>
     <string name="history_text_empty">No history available. </string>
 
-    <string name="history_entry_removed">removed %s</string>
-    <string name="history_entry_added">added %s</string>
-    <string name="history_entry_new_week">new week (left from last week: %s / new time: %s)</string>
-    <string name="history_entry_transferred_from_last_week">transferred %s from last week</string>
+    <string name="history_entry_removed">removed {amount}</string>
+    <string name="history_entry_new_week">new week (left from last week: {last_week_time_left}, transferred {transferred_from_last_week} resulting in new time: {new_week_time_left})</string>
 </resources>
