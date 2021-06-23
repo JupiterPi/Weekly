@@ -8,10 +8,11 @@
     <string name="chooser_title">Wie viel Zeit abziehen?</string>
     <string name="main_remove">Zeit abziehen</string>
     <string name="menu_history">Verlauf</string>
-    <string name="menu_last_week">Letzte Woche</string>
     <string name="history_title">Verlauf</string>
     <string name="history_text_empty">"Kein Verlauf verfügbar. "</string>
     <string name="error_not_implemented">Noch nicht verfügbar!</string>
     <string name="history_entry_removed">{amount} abgezogen</string>
     <string name="history_entry_new_week">neue Woche ({last_week_time_left} von letzter Woche übrig, {transferred_from_last_week} davon übertragen, also neue Zeit: {new_week_time_left})</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="menu_settings">Einstellungen</string>
 </resources>

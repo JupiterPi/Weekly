@@ -15,11 +15,13 @@
     <string name="chooser_btn_remove_10min" translatable="false">- 10 min</string>
 
     <string name="menu_history">History</string>
-    <string name="menu_last_week">Last week</string>
+    <string name="menu_settings">Settings</string>
 
     <string name="history_title">History</string>
     <string name="history_text_empty">No history available. </string>
 
     <string name="history_entry_removed">removed {amount}</string>
     <string name="history_entry_new_week">new week (left from last week: {last_week_time_left}, transferred {transferred_from_last_week} resulting in new time: {new_week_time_left})</string>
+
+    <string name="settings_title">Settings</string>
 </resources>

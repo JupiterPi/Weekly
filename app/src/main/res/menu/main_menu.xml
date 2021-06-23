@@ -9,8 +9,8 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_last_week"
-        android:title="@string/menu_last_week"
+        android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"
         app:showAsAction="never" />
 
 </menu>
