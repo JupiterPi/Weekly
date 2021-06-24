@@ -1,21 +1,31 @@
 <resources>
     <string name="app_name" translatable="false">Weekly</string>
 
+    <!-- Main -->
+
     <string name="main_time_left">%s left</string>
     <string name="main_remove">Remove time</string>
+
+    <!-- Error Dialog -->
 
     <string name="dialog_error_message">An error occurred :(</string>
     <string name="dialog_error_ok">Uh, ok</string>
     <string name="error_not_implemented">Not yet implemented!</string>
 
-    <string name="chooser_title">How much time do you wan to remove?</string>
+    <!-- Time Choose Dialog -->
+
+    <string name="chooser_title">How much time do you want to remove?</string>
     <string name="chooser_remove_display">Remove %s</string>
     <string name="chooser_remove_display_empty">Choose time to remove</string>
     <string name="chooser_btn_remove_5min" translatable="false">- 5 min</string>
     <string name="chooser_btn_remove_10min" translatable="false">- 10 min</string>
 
+    <!-- Main: Menu -->
+
     <string name="menu_history">History</string>
     <string name="menu_settings">Settings</string>
+
+    <!-- History Activity, History Entries -->
 
     <string name="history_title">History</string>
     <string name="history_text_empty">No history available. </string>
@@ -23,5 +33,15 @@
     <string name="history_entry_removed">removed {amount}</string>
     <string name="history_entry_new_week">new week (left from last week: {last_week_time_left}, transferred {transferred_from_last_week} resulting in new time: {new_week_time_left})</string>
 
+    <!-- Settings -->
+
     <string name="settings_title">Settings</string>
+
+    <string name="settings_security_title">Parental Access</string>
+    <string name="settings_security_password_title">Password: %s</string>
+    <string name="settings_security_password_summary">Tap to change. </string>
+
+    <string name="settings_amount_title">Amount of Time</string>
+    <string name="settings_amount_start_of_week_title">First day of the week: %s</string>
+    <string name="settings_amount_start_of_week_summary">Tap to change. </string>
 </resources>
